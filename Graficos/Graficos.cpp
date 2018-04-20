@@ -28,7 +28,9 @@ GLuint ModeloID;
 GLuint vistaID;
 GLuint proyeccionID;
 
-float 
+float camaraX = 3.0f;
+float camaraY = 5.0f;
+float camaraZ = 9.0f;
 
 vec3 posicionCamara;
 
@@ -49,30 +51,44 @@ GLfloat alto = 768;
 void actualizar() {
 	int estadoderecha = glfwGetKey(window, GLFW_KEY_RIGHT);
 	if (estadoderecha == GLFW_PRESS) {
-		nave->rotanave(1);
+		camaraX += 0.1f;
 		}
 	
 	int estadoizq = glfwGetKey(window, GLFW_KEY_LEFT);
 	if (estadoizq == GLFW_PRESS) {
-		camaraX-=1;
-	}
-		
-	int estadoarriba = glfwGetKey(window, GLFW_KEY_UP);
-	if (estadoarriba == GLFW_PRESS) {
-		nave->movernave();
+		camaraX -= 0.1f;
 	}
 
-		/*figura2->transformaciones =
-			translate(figura2->transformaciones, vec3(0.001f, 0.0f, 0.0f));*/
-		/*figura2->transformaciones = 
-			scale(figura2->transformaciones, vec3(1.001f, 1.001f, 1.001f));*/
-		/*figura2->transformaciones =
-			rotate(figura2->transformaciones, 0.05f, vec3(0.0f, 0.0f, 1.0f));*/
+	int estadoArriba = glfwGetKey(window, GLFW_KEY_UP);
+	if (estadoArriba == GLFW_PRESS) {
+		camaraY += 0.1f;
+	}
 
+	int estadoAbajo = glfwGetKey(window, GLFW_KEY_DOWN);
+	if (estadoAbajo == GLFW_PRESS) {
+		camaraY -= 0.1f;
+	}
+
+	int estadoQ = glfwGetKey(window, GLFW_KEY_Q);
+	if (estadoQ == GLFW_PRESS) {
+		camaraZ += 0.1f;
+	}
+
+	int estadoE = glfwGetKey(window, GLFW_KEY_E);
+	if (estadoE == GLFW_PRESS) {
+		camaraZ -= 0.1f;
+	}
+
+	posicionCamara = vec3(camaraX, camaraY, camaraZ);
+
+	vista = lookAt(posicionCamara, //Posicion de la camara
+		vec3(0.0f, 0.0f, 0.0f),		//Posicion del objetivo
+		vec3(0.0f, 1.0f, 0.0f));
+
+	cuadrado->vista = vista;
 };
 
 void dibujar() {
-
 	cuadrado->dibujar(GL_POLYGON);
 	//figura2->dibujar(GL_POLYGON);
 }
@@ -138,8 +154,8 @@ void inicializarCuadrado() {
 
 void inicializarvista() {
 	vista = lookAt(posicionCamara, //Posicion de la camara
-		vec3(0.0f, 0.0f, 0.0f),				//Posicion del objetivo
-		vec3(0.0f, 1.0f, 0.0f));			//Vector hacia arriba (rotacion camara)
+		vec3(0.0f, 0.0f, 0.0f),		//Posicion del objetivo
+		vec3(0.0f, 1.0f, 0.0f));	//Vector hacia arriba (rotacion camara)
 }
 
 void inicializarproyeccion() {
@@ -185,7 +201,7 @@ int main()
 
 	red = green = blue = 0.5f;
 
-	posicionCamara = vec3(3.0f, 5.0f, 9.0f);
+	posicionCamara = vec3(camaraX, 5.0f, 9.0f);
 
 	inicializarvista();
 	inicializarproyeccion();
