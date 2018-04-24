@@ -28,16 +28,16 @@ GLuint ModeloID;
 GLuint vistaID;
 GLuint proyeccionID;
 
-float camaraX = 3.0f;
-float camaraY = 5.0f;
-float camaraZ = 9.0f;
+float camaraX = 0.0f;
+float camaraY = 0.0f;
+float camaraZ = 5.0f;
 
 vec3 posicionCamara;
 
 mat4 vista;
 mat4 proyeccion;
 
-Nave *nave;
+Modelo *nave;
 Modelo *cuadrado;
 
 Shader *shader;
@@ -85,11 +85,13 @@ void actualizar() {
 		vec3(0.0f, 0.0f, 0.0f),		//Posicion del objetivo
 		vec3(0.0f, 1.0f, 0.0f));
 
-	cuadrado->vista = vista;
+	nave->vista = vista;
+	//cuadrado->vista = vista;
 };
 
 void dibujar() {
-	cuadrado->dibujar(GL_POLYGON);
+	//cuadrado->dibujar(GL_TRIANGLES);
+	nave->dibujar(GL_TRIANGLES);
 	//figura2->dibujar(GL_POLYGON);
 }
 
@@ -152,6 +154,51 @@ void inicializarCuadrado() {
 	cuadrado->proyeccion = proyeccion;
 }
 
+void inicializarNave() {
+	nave = new Modelo();
+	srand(time(NULL));
+
+	nave->vertices.push_back({ vec4(-1.0f, 0.0f, -1.0f, 1.0f),vec4((float(rand() % 101)) / 100,(float(rand() % 101)) / 100,(float(rand() % 101)) / 100,1.0f) });
+	nave->vertices.push_back({ vec4(-0.25f, 1.0f, -0.95f, 1.0f),vec4((float(rand() % 101)) / 100,(float(rand() % 101)) / 100,(float(rand() % 101)) / 100,1.0f) });
+	nave->vertices.push_back({ vec4(0.0f, 0.0f, 3.0f, 1.0f),vec4((float(rand() % 101)) / 100,(float(rand() % 101)) / 100,(float(rand() % 101)) / 100,1.0f) });
+
+	nave->vertices.push_back({ vec4(0.0f, 0.0f, 3.0f, 1.0f),vec4((float(rand() % 101)) / 100,(float(rand() % 101)) / 100,(float(rand() % 101)) / 100,1.0f) });
+	nave->vertices.push_back({ vec4(0.25f, 1.0f, -0.95f, 1.0f),vec4((float(rand() % 101)) / 100,(float(rand() % 101)) / 100,(float(rand() % 101)) / 100,1.0f) });
+	nave->vertices.push_back({ vec4(1.0f, 0.0f, -1.0f, 1.0f),vec4((float(rand() % 101)) / 100,(float(rand() % 101)) / 100,(float(rand() % 101)) / 100,1.0f) });
+
+	nave->vertices.push_back({ vec4(-0.25f, 1.0f, -0.95f, 1.0f),vec4((float(rand() % 101)) / 100,(float(rand() % 101)) / 100,(float(rand() % 101)) / 100,1.0f) });
+	nave->vertices.push_back({ vec4(0.25f, 1.0f, -0.95f, 1.0f),vec4((float(rand() % 101)) / 100,(float(rand() % 101)) / 100,(float(rand() % 101)) / 100,1.0f) });
+	nave->vertices.push_back({ vec4(0.0f, 0.0f, 3.0f, 1.0f),vec4((float(rand() % 101)) / 100,(float(rand() % 101)) / 100,(float(rand() % 101)) / 100,1.0f) });
+
+	nave->vertices.push_back({ vec4(-1.0f, 0.0f, -1.0f, 1.0f),vec4((float(rand() % 101)) / 100,(float(rand() % 101)) / 100,(float(rand() % 101)) / 100,1.0f) });
+	nave->vertices.push_back({ vec4(0.0f, 0.0f, 3.0f, 1.0f),vec4((float(rand() % 101)) / 100,(float(rand() % 101)) / 100,(float(rand() % 101)) / 100,1.0f) });
+	nave->vertices.push_back({ vec4(0.0f, -0.5f, -0.95f, 1.0f),vec4((float(rand() % 101)) / 100,(float(rand() % 101)) / 100,(float(rand() % 101)) / 100,1.0f) });
+
+	nave->vertices.push_back({ vec4(0.0f, 0.0f, 3.0f, 1.0f),vec4((float(rand() % 101)) / 100,(float(rand() % 101)) / 100,(float(rand() % 101)) / 100,1.0f) });
+	nave->vertices.push_back({ vec4(1.0f, 0.0f, -1.0f, 1.0f),vec4((float(rand() % 101)) / 100,(float(rand() % 101)) / 100,(float(rand() % 101)) / 100,1.0f) });
+	nave->vertices.push_back({ vec4(0.0f, -0.5f, -0.95f, 1.0f),vec4((float(rand() % 101)) / 100,(float(rand() % 101)) / 100,(float(rand() % 101)) / 100,1.0f) });
+
+	nave->vertices.push_back({ vec4(-0.25f, 1.0f, -0.95f, 1.0f),vec4((float(rand() % 101)) / 100,(float(rand() % 101)) / 100,(float(rand() % 101)) / 100,1.0f) });
+	nave->vertices.push_back({ vec4(-0.25f, 1.5f, -1.0f, 1.0f),vec4((float(rand() % 101)) / 100,(float(rand() % 101)) / 100,(float(rand() % 101)) / 100,1.0f) });
+	nave->vertices.push_back({ vec4(0.25f, 1.0f, -0.95f, 1.0f),vec4((float(rand() % 101)) / 100,(float(rand() % 101)) / 100,(float(rand() % 101)) / 100,1.0f) });
+
+	nave->vertices.push_back({ vec4(-0.25f, 1.5f, -1.0f, 1.0f),vec4((float(rand() % 101)) / 100,(float(rand() % 101)) / 100,(float(rand() % 101)) / 100,1.0f) });
+	nave->vertices.push_back({ vec4(0.25f, 1.5f, -1.0f, 1.0f),vec4((float(rand() % 101)) / 100,(float(rand() % 101)) / 100,(float(rand() % 101)) / 100,1.0f) });
+	nave->vertices.push_back({ vec4(0.25f, 1.0f, -0.95f, 1.0f),vec4((float(rand() % 101)) / 100,(float(rand() % 101)) / 100,(float(rand() % 101)) / 100,1.0f) });
+
+	nave->vertices.push_back({ vec4(-1.0f, 0.0f, -1.0f, 1.0f),vec4((float(rand() % 101)) / 100,(float(rand() % 101)) / 100,(float(rand() % 101)) / 100,1.0f) });
+	nave->vertices.push_back({ vec4(-0.25f, 1.5f, -1.0f, 1.0f),vec4((float(rand() % 101)) / 100,(float(rand() % 101)) / 100,(float(rand() % 101)) / 100,1.0f) });
+	nave->vertices.push_back({ vec4(-0.25f, 1.0f, -0.95f, 1.0f),vec4((float(rand() % 101)) / 100,(float(rand() % 101)) / 100,(float(rand() % 101)) / 100,1.0f) });
+
+	nave->vertices.push_back({ vec4(0.25f, 1.5f, -1.0f, 1.0f),vec4((float(rand() % 101)) / 100,(float(rand() % 101)) / 100,(float(rand() % 101)) / 100,1.0f) });
+	nave->vertices.push_back({ vec4(1.0f, 0.0f, -1.0f, 1.0f),vec4((float(rand() % 101)) / 100,(float(rand() % 101)) / 100,(float(rand() % 101)) / 100,1.0f) });
+	nave->vertices.push_back({ vec4(0.25f, 1.0f, -0.95f, 1.0f),vec4((float(rand() % 101)) / 100,(float(rand() % 101)) / 100,(float(rand() % 101)) / 100,1.0f) });
+
+
+	nave->vista = vista;
+	nave->proyeccion = proyeccion;
+}
+
 void inicializarvista() {
 	vista = lookAt(posicionCamara, //Posicion de la camara
 		vec3(0.0f, 0.0f, 0.0f),		//Posicion del objetivo
@@ -206,8 +253,9 @@ int main()
 	inicializarvista();
 	inicializarproyeccion();
 
-	inicializarFigura();
-	inicializarCuadrado();
+	//inicializarFigura();
+	//inicializarCuadrado();
+	inicializarNave();
 
 	//crear instancia del shader
 	const char * rutaVertex = "vShaderSimple.shader";
@@ -225,8 +273,11 @@ int main()
 	//Desenlazar el shader
 	shader->desenlazarShader();
 
-	cuadrado->shader = shader;
-	cuadrado->inicializarVertexArray(posicionID, colorID,ModeloID,vistaID,proyeccionID);
+	//cuadrado->shader = shader;
+	//cuadrado->inicializarVertexArray(posicionID, colorID,ModeloID,vistaID,proyeccionID);
+
+	nave->shader = shader;
+	nave->inicializarVertexArray(posicionID, colorID, ModeloID, vistaID, proyeccionID);
 
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);

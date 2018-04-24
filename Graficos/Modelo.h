@@ -31,6 +31,4 @@ public:
 
 	void inicializarVertexArray(GLuint posicionID, GLuint colorID, GLuint modeloID, GLuint vistaID, GLuint proyeccionID);
 	void dibujar(GLenum modoDibujo);
-
-
 };
